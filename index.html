@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ Niên Khóa 12C07</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0f172a',
+                        darkLight: '#1e293b',
+                        primary: '#8b5cf6',
+                        accent: '#f59e0b',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass {
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .glass-hover {
+                transition: all 0.3s ease;
+            }
+            .glass-hover:hover {
+                background: rgba(255, 255, 255, 0.08);
+                border-color: rgba(139, 92, 246, 0.3);
+                transform: translateY(-4px);
+            }
+            .text-gradient {
+                background: linear-gradient(135deg, #8b5cf6, #f59e0b, #8b5cf6);
+                background-size: 200% auto;
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: gradient 3s linear infinite;
+            }
+            .fade-in {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 0.6s ease-out;
+            }
+            .fade-in.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.3);
+            animation: float 7s infinite ease-in-out;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, #8b5cf6, #f59e0b);
+        }
+
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 20px;
+            }
+        }
+
+        .sticky-note {
+            transform: rotate(var(--rotation));
+            transition: all 0.3s ease;
+        }
+        .sticky-note:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8b5cf6;
+            border-radius: 10px;
+        }
+    /* Tìm tất cả ảnh bên trong student-card */
+.student-card img {
+    transition: transform 0.4s ease; /* Chuyển động mượt trong 0.4 giây */
+}
+
+/* Khi người dùng rê chuột vào card, lấy thẻ img bên trong và phóng to */
+.student-card:hover img {
+    transform: scale(1.15); /* Phóng to lên 1.15 lần (115%) */
+}
+    </style>
+</head>
+<body class="text-gray-100 font-inter">
+    <div id="particles" class="fixed inset-0 pointer-events-none z-10"></div>
+
+    <nav class="fixed top-0 left-0 right-0 z-50 glass px-4 py-3">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h3 class="text-xl font-bold text-gradient">12C07 - Khóa K25</h3>
+            <div class="hidden md:flex gap-6 text-sm">
+                <a href="#timeline" class="hover:text-primary transition-colors">Hành Trình</a>
+                <a href="#roster" class="hover:text-primary transition-colors">Thành Viên</a>
+                <a href="#gallery" class="hover:text-primary transition-colors">Hình Ảnh</a>
+                <a href="#wishes" class="hover:text-primary transition-colors">Lời Chúc</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="min-h-screen flex items-center justify-center relative px-4">
+    <div class="absolute inset-0 z-0 overflow-hidden">
+        <video id="heroVideo" autoplay muted loop playsinline class="w-full h-full object-cover opacity-65">
+            <source src="videolop.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-b from-dark/30 via-dark/20 to-dark/40"></div>
+    </div>
+    <div class="z-40 absolute top-1/2 mt-36 glass rounded-xl px-4 py-2">
+        <audio id="bgMusic" controls loop volume="0.4" class="w-72 h-10">
+            <source src="videolop.mp4" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div class="text-center z-20 max-w-4xl">
+        <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-extrabold mb-6 text-gradient">
+            Năm Cuối Cấp 3
+        </h1>
+        <h2 class="text-2xl md:text-3xl font-bold mb-6 text-white/90">Lớp 12C07</h2>
+        <p class="text-[clamp(1rem,3vw,1.5rem)] text-gray-300 mb-10 max-w-2xl mx-auto">
+            Những tháng ngày chúng ta cùng nhau đi qua. Mãi mãi một lớp học.
+        </p>
+        <a href="#timeline" class="inline-block px-8 py-4 bg-gradient-to-r from-primary to-accent rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1">
+            Nhớ Lại Những Kỷ Niệm <i class="fa fa-arrow-down ml-2"></i>
+        </a>
+
+        <div class="mt-16 animate-bounce">
+            <i class="fa fa-chevron-down text-primary opacity-50 text-2xl"></i>
+        </div>
+    </div>
+</section>
+
+    <!-- ANIMATED TIMELINE SECTION -->
+    <section id="timeline" class="py-24 px-4 relative">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-20 fade-in">Hành Trình 2025 - 2026</h2>
+
+            <div class="relative">
+                <div class="timeline-line hidden md:block"></div>
+
+                <div class="fade-in mb-20 md:mb-0 md:grid md:grid-cols-2 gap-10 py-16">
+                    <div class="text-right md:pr-16">
+                        <h3 class="text-2xl font-bold text-primary mb-3">Tháng 10 / 2025</h3>
+                        <h4 class="text-xl font-semibold mb-2">Ngày Phụ Nữ Việt Nam 20/10</h4>
+                        <p class="text-gray-400">Ngày mà các bạn nam bỗng trở nên ga lăng lạ thường. Những bó hoa tự gói vụng về, những viên kẹo ngọt và nụ cười rạng rỡ của các bạn nữ là những mảnh ghép rực rỡ nhất của thanh xuân 12C07.</p>
+                    </div>
+                    <div>
+                        <img src="Ảnh lớp tăng hoa cho cô.jpg" alt="20/11" class="rounded-xl w-full shadow-xl shadow-primary/10">
+                    </div>
+                </div>
+
+                <div class="fade-in mb-20 md:mb-0 md:grid md:grid-cols-2 gap-10 py-16">
+                    <div class="order-2 md:order-1">
+                        <img src="ảnh đà lạt.jpg" alt="Đà Lạt" class="rounded-xl w-full shadow-xl shadow-accent/10">
+                    </div>
+                    <div class="md:pl-16 order-1 md:order-2">
+                        <h3 class="text-2xl font-bold text-accent mb-3">Tháng 2 / 2026</h3>
+                        <h4 class="text-xl font-semibold mb-2">Chuyến Đi Đà Lạt</h4>
+                        <p class="text-gray-400">Giữa cái lạnh se sắt của sương mù cao nguyên, thanh xuân của chúng ta lại rực cháy hơn bao giờ hết. Tiếng nói cười vang vọng trên những chuyến xe, những cái tựa vai lúc mệt nhoài là kỷ niệm đẹp đẽ nhất mà thời gian không thể xóa nhòa.</p>
+                    </div>
+                </div>
+
+                <div class="fade-in md:grid md:grid-cols-2 gap-10 py-16">
+                    <div class="text-right md:pr-16">
+                        <h3 class="text-2xl font-bold text-primary mb-3">Mỗi ngày</h3>
+                        <h4 class="text-xl font-semibold mb-2">Kỉ niệm gắn bó</h4>
+                        <p class="text-gray-400">Tiếng trống trường vang lên lần cuối cùng khép lại 3 năm cấp ba. Những chiếc áo trắng chi chít chữ ký, những giọt nước mắt nghẹn ngào dưới sân trường THPT Võ Trường Toản.</p>
+                    </div>
+                    <div>
+                        <img src="ảnh cho chiều.jpg" alt="Tặng quà cô" class="rounded-xl w-full shadow-xl shadow-primary/10">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ✅ DANH SÁCH LỚP  -->
+    <section id="roster" class="py-24 px-4 bg-darkLight">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-10 fade-in">Thành Viên Lớp 12C07</h2>
+            <div id="roster-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+
+                <!-- GIÁO VIÊN CHỦ NHIỆM -->
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover border-2 border-accent" data-group="all">
+                    <img src="ảnh cô.jpg" alt="Cô giáo chủ nhiệm" class="w-full h-56 object-cover">
+                    <div class="p-4">
+                        <h4 class="font-semibold text-lg">✨ Cô Lê Thị Thúy Nga</h4>
+                        <p class="text-sm text-gray-400">Our second MOM !!</p>
+                    </div>
+                </div>
+
+                <!-- DANH SÁCH 46 HỌC SINH-->
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="tuanh.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Thị Tú Anh</h4><p class="text-sm text-gray-400">Tú Anh</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="THUYCHUC.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Võ Thủy Chúc</h4><p class="text-sm text-gray-400">Chúc đao</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="DUYEN.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Thị Phương Duyên</h4><p class="text-sm text-gray-400">Duyên phận</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="HAIDANG.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Trần Hải Đăng</h4><p class="text-sm text-gray-400">Hải dog</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="ĐUONGAT.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Dương Đạt</h4><p class="text-sm text-gray-400">Trùm English</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="NGOCHA.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Ngọc Hà</h4><p class="text-sm text-gray-400">Dân CTXH</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="HUYHOANG.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Huy Hoàng</h4><p class="text-sm text-gray-400">lốp trưởng</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="danghuy.JPG" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Bồ Đăng Huy</h4><p class="text-sm text-gray-400">Học sinh gương mẫu</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="quochuy.JPG" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Hoàng Quốc Huy</h4><p class="text-sm text-gray-400">Fan Mu!!</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="haihuy.JPG" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Phạm Hải Huy</h4><p class="text-sm text-gray-400">Bobby</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="ngochuyen.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Hoàng Thị Ngọc Huyền</h4><p class="text-sm text-gray-400">Quocsang</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="thanhhuyen.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Trần Thanh Huyền</h4><p class="text-sm text-gray-400">Cô gái m52</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="KHANG.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Đình Khang</h4><p class="text-sm text-gray-400">Vĩ Mô</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="QUANGKHANH.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Lê Quang Khánh</h4><p class="text-sm text-gray-400">Tâm Nghi</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group1"><img src="VULAM.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Huỳnh Vũ Lâm</h4><p class="text-sm text-gray-400">Lâm Beso</p></div></div>
+
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="LELINH.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Lê Nguyễn Khánh Linh</h4><p class="text-sm text-gray-400">Top1 VTT</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="THUYLINH.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Quản Thị Thuỳ Linh</h4><p class="text-sm text-gray-400">Bạn của Loppy</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="VANLINH.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Vũ Nguyễn Văn Linh</h4><p class="text-sm text-gray-400">Zinh Lăng</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="NHATLONG.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Hoàng Nhật Long</h4><p class="text-sm text-gray-400">Leo bóng</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="THANHLONG.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Phạm Ngọc Thành Long</h4><p class="text-sm text-gray-400">Long Củ</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="NHATMINH.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Tô Nhật Minh</h4><p class="text-sm text-gray-400">Anh Da Den </p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="HOANGMINH.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Võ Hoàng Minh</h4><p class="text-sm text-gray-400">Dân chuyên minecraft</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="DAINAM.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Lê Đại Nam</h4><p class="text-sm text-gray-400">Nam không cận</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="HOANGNAM.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Vũ Hoàng Nam</h4><p class="text-sm text-gray-400">Nam cận</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="KIMNGAN.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Huỳnh Ngọc Kim Ngân</h4><p class="text-sm text-gray-400">Lobby</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="DOANNHI.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Đoàn Nguyễn Yến Nhi</h4><p class="text-sm text-gray-400">Xmen</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="NGUYENNHI.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Ngọc Yến Nhi</h4><p class="text-sm text-gray-400">Anh Luật</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="PHUONGOANH.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Trần Thị Phương Oanh</h4><p class="text-sm text-gray-400">Oanh nè</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="CAOPHONG.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Cao Phong</h4><p class="text-sm text-gray-400">Phong "cao"</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group2"><img src="THANHPHONG.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Trần Thanh Phong</h4><p class="text-sm text-gray-400">Tính Phong</p></div></div>
+
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="HOANGPHUC.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Lâm Hoàng Phúc</h4><p class="text-sm text-gray-400">Lạc đà</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="minhquan.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Trương Nguyễn Minh Quân</h4><p class="text-sm text-gray-400">Anh Trương</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="THAOQUYNH.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Lê Thảo Quỳnh</h4><p class="text-sm text-gray-400">Tquynh</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="NHUQUYNH.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Như Quỳnh</h4><p class="text-sm text-gray-400">Nquynh</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="NAMSON.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Hữu Nam Sơn</h4><p class="text-sm text-gray-400">Nam Sơn</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="LETAM.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Lê Thanh Tâm</h4><p class="text-sm text-gray-400">Tâm già</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="NGUYENTAM.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Thanh Tâm</h4><p class="text-sm text-gray-400">Tâm giặc </p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="NHATTAN.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Đoàn Đại Nhật Tân</h4><p class="text-sm text-gray-400">Wibu</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="ANTHAI.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Vũ Khiếu An Thái</h4><p class="text-sm text-gray-400">Thái dúi</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="THINH.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Trần Phúc Thịnh</h4><p class="text-sm text-gray-400">Thịnh lửa</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="MINHTHU.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Vũ Thị Minh Thư</h4><p class="text-sm text-gray-400">Mint Thư</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="THUAN.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Phạm Minh Thuận</h4><p class="text-sm text-gray-400">Thuận Béo</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="MINHTOAN.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Tạ Minh Toàn</h4><p class="text-sm text-gray-400">Toàn Tạ</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="NGOCTRANG.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Hoàng Ngọc Trang</h4><p class="text-sm text-gray-400">Ngọc Chim</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="MAITRANG.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Nguyễn Ngọc Mai Trang</h4><p class="text-sm text-gray-400">Mai Chim</p></div></div>
+                <div class="student-card fade-in glass rounded-xl overflow-hidden glass-hover" data-group="group3"><img src="VANTU.jpg" class="w-full h-56 object-cover"><div class="p-4"><h4 class="font-semibold text-lg">Hoàng Văn Tú</h4><p class="text-sm text-gray-400">Tú Đội</p></div></div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PHOTO GALLERY SECTION -->
+    <section id="gallery" class="py-24 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 fade-in">Những Kỷ Niệm</h2>
+
+            <div class="columns-2 md:columns-3 lg:columns-4 gap-4">
+                <img src="ảnh 1.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 2.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 3.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 4.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 5.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 6.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 7.jpeg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 8.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 9.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 10.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 11.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 12.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 13.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 14.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 15.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 16.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 17.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 18.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 19.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 20.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 21.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 22.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 23.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 24.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 25.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 26.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 27.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 28.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 29.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 30.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                <img src="ảnh 31.jpg" class="gallery-image w-full mb-4 rounded-lg cursor-pointer hover:opacity-90 transition-all" alt="Memory">
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4">
+        <button id="close-lightbox" class="absolute top-6 right-6 text-white text-3xl">&times;</button>
+        <img id="lightbox-image" class="max-w-full max-h-[90vh] rounded-lg" alt="Full size">
+    </div>
+
+    <!-- COUNTDOWN & WISHES BOARD -->
+    <section id="wishes" class="py-24 px-4 bg-darkLight">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 fade-in">Đếm Ngược Ngày Tốt Nghiệp</h2>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-24 max-w-4xl mx-auto fade-in">
+                <div class="glass rounded-xl p-6 text-center">
+                    <div id="days" class="text-4xl md:text-6xl font-bold text-gradient">00</div>
+                    <div class="text-gray-400 mt-2">Ngày</div>
+                </div>
+                <div class="glass rounded-xl p-6 text-center">
+                    <div id="hours" class="text-4xl md:text-6xl font-bold text-gradient">00</div>
+                    <div class="text-gray-400 mt-2">Giờ</div>
+                </div>
+                <div class="glass rounded-xl p-6 text-center">
+                    <div id="minutes" class="text-4xl md:text-6xl font-bold text-gradient">00</div>
+                    <div class="text-gray-400 mt-2">Phút</div>
+                </div>
+                <div class="glass rounded-xl p-6 text-center">
+                    <div id="seconds" class="text-4xl md:text-6xl font-bold text-gradient">00</div>
+                    <div class="text-gray-400 mt-2">Giây</div>
+                </div>
+            </div>
+
+            <h3 class="text-3xl font-bold text-center mb-10 fade-in">Để Lại Lời Chúc</h3>
+
+            <div class="max-w-2xl mx-auto mb-16 fade-in">
+                <form id="wish-form" class="glass rounded-xl p-6 flex flex-col gap-4">
+                    <input type="text" id="wish-name" placeholder="Tên của bạn" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-3 outline-none focus:border-primary transition-colors">
+                    <textarea id="wish-text" placeholder="Viết lời chúc của bạn..." required rows="3" class="bg-white/5 border border-white/10 rounded-lg px-4 py-3 outline-none focus:border-primary transition-colors resize-none"></textarea>
+                    <button type="submit" class="bg-primary hover:bg-primary/90 py-3 rounded-lg font-semibold transition-colors">Gửi Lời Chúc ✨</button>
+                </form>
+            </div>
+
+            <div id="wishes-board" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="py-12 text-center text-gray-500 glass">
+        <h3 class="text-2xl font-bold text-gradient mb-4">12C07 - Khóa K25</h3>
+        <p>Được làm bằng tất cả những kỷ niệm</p>
+        <p class="mt-4">Mãi mãi là bạn bè.</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for(let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 8 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.opacity = Math.random() * 0.3 + 0.1;
+                particle.style.animationDelay = Math.random() * 7 + 's';
+                
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        const graduationDate = new Date('June 11, 2026 08:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = graduationDate - now;
+
+            if (distance < 0) {
+                document.getElementById('days').innerText = '00';
+                document.getElementById('hours').innerText = '00';
+                document.getElementById('minutes').innerText = '00';
+                document.getElementById('seconds').innerText = '00';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        const tabs = document.querySelectorAll('.roster-tab');
+        const cards = document.querySelectorAll('.student-card');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('bg-primary'));
+                tab.classList.add('bg-primary');
+
+                const group = tab.dataset.group;
+
+                cards.forEach(card => {
+                    if(group === 'all' || card.dataset.group === group || card.dataset.group === 'all') {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        tabs[0].classList.add('bg-primary');
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+
+        document.querySelectorAll('.gallery-image').forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImage.src = img.src;
+                lightbox.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        document.getElementById('close-lightbox').addEventListener('click', () => {
+            lightbox.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if(e.target === lightbox) {
+                lightbox.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        const wishForm = document.getElementById('wish-form');
+        const wishesBoard = document.getElementById('wishes-board');
+        const noteColors = ['bg-amber-600', 'bg-pink-600', 'bg-purple-600', 'bg-blue-600', 'bg-green-600'];
+
+        let wishes = JSON.parse(localStorage.getItem('yearbookWishes') || '[]');
+
+        function renderWishes() {
+            wishesBoard.innerHTML = '';
+            wishes.forEach(wish => {
+                addWishToBoard(wish.name, wish.text, wish.color, wish.rotation, false);
+            });
+        }
+
+        function addWishToBoard(name, text, color, rotation, save = true) {
+            const note = document.createElement('div');
+            note.className = `sticky-note ${color} p-5 rounded-lg shadow-xl`;
+            note.style.setProperty('--rotation', rotation + 'deg');
+
+            note.innerHTML = `
+                <p class="font-semibold mb-2">${name}</p>
+                <p class="text-gray-100">${text}</p>
+            `;
+
+            wishesBoard.prepend(note);
+
+            if(save) {
+                wishes.unshift({name, text, color, rotation});
+                localStorage.setItem('yearbookWishes', JSON.stringify(wishes));
+            }
+        }
+
+        wishForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('wish-name').value;
+            const text = document.getElementById('wish-text').value;
+            const color = noteColors[Math.floor(Math.random() * noteColors.length)];
+            const rotation = (Math.random() * 6) - 3;
+
+            addWishToBoard(name, text, color, rotation);
+
+            wishForm.reset();
+        });
+
+        renderWishes();
+    </script>
+</body>
+</html>
